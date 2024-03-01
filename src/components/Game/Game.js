@@ -14,16 +14,15 @@ function Game() {
   const [guesses, setGuesses] = useState([]);
 
   function handleGuessSubmit(guessTry) {
-    const nextGuess = {
-      value: guessTry,
-      id: new Date().valueOf()
-    };
-    setGuesses([...guesses, nextGuess]);
+    setGuesses([...guesses, guessTry]);
   }
 
   return (
     <>
-      <GuessResults guesses={guesses} />
+      <GuessResults
+        guesses={guesses}
+        answer={answer}
+      />
       <GameInput handleGuessSubmit={handleGuessSubmit} />
     </>
   );
