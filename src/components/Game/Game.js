@@ -31,13 +31,13 @@ function Game() {
 
   return (
     <>
-      <GuessResults
-        guesses={guesses}
-        answer={answer}
-      />
       <GuessInput
         handleGuessSubmit={handleGuessSubmit}
         gameStatus={gameStatus}
+      />
+      <GuessResults
+        guesses={guesses}
+        answer={answer}
       />
       {gameStatus === GAME_STATUS.won && <WonBanner attempts={guesses.length} />}
       {gameStatus === GAME_STATUS.lost && <LostBanner answer={answer} />}

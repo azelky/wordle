@@ -1,42 +1,45 @@
-/*
-  Theme and global variables
-*/
-html {
-  overflow-y: scroll;
-
-  --game-spacing: 32px;
-  --header-height: 4rem;
-  --color-success: hsl(150deg 70% 30%);
-  --color-warning: hsl(50deg 100% 30%);
-  --color-error: hsl(0deg 70% 45%);
-  --color-gray-100: hsl(0deg 0% 10%);
-  --color-gray-300: hsl(0deg 0% 25%);
-  --color-gray-500: hsl(0deg 0% 50%);
-  --color-gray-700: hsl(0deg 0% 75%);
-  --color-gray-900: hsl(0deg 0% 90%);
+:root {
+  --game-spacing: 1.5rem;
+  --radius: .25rem;
+  --color-body-bg: hsl(222deg 20% 75% / 50%);
+  --color-body: hsl(222deg 15% 40%);
+  --color-input-border: hsl(0deg 0% 20% / 80%);
+  --color-header-border: hsl(222deg 20% 60% / 50%);
+  --color-banner: hsl(0deg 0% 100%);
+  --color-cell: hsl(0deg 0% 100%);
+  --color-cell-border: hsl(222deg 20% 60%);
+  --color-input-bg: hsl(0deg 0% 100% / 50%);
+  --color-success: hsl(146deg 70% 36%);
+  --color-incorrect: hsl(0deg 0% 30%);
+  --color-warning: hsl(51deg 100% 38%);
+  --color-error: hsl(340deg 70% 45%);
 }
 
-/*
-  Custom styles
-*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
+  overflow-y: scroll;
+  background-color: var(--color-body-bg);
+  color: var(--color-body);
   font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
 }
 
-@media (max-height: 600px) {
+@media (min-height: 800px) {
   body {
-    --game-spacing: 8px;
+    --game-spacing: 5vh;
   }
-}
-
-button {
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
 }
 
 .wrapper {
@@ -46,28 +49,18 @@ button {
 }
 
 header {
-  display: flex;
-  height: var(--header-height);
-  border-bottom: 1px solid var(--color-gray-700);
-  color: var(--color-gray-300);
-}
-
-header .side {
-  display: grid;
-  width: var(--header-height);
-  place-content: center;
+  border-bottom: 1px solid var(--color-header-border);
 }
 
 h1 {
-  flex: 1;
-  font-size: 2rem;
-  line-height: var(--header-height);
+  font-size: 1.5rem;
+  line-height: 2;
   text-align: center;
 }
 
-@media (max-width: 25rem) {
+@media (min-width: 60rem) {
   h1 {
-    font-size: 1.25rem;
+    font-size: 2rem;
   }
 }
 
@@ -78,15 +71,8 @@ h1 {
   min-width: 250px;
   max-width: min(500px, 58vh, 100%);
   margin: 0 auto;
-  padding: var(--game-spacing) 32px;
+  padding: 2rem;
   gap: var(--game-spacing);
-}
-
-.guess-results {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .guess {
@@ -96,59 +82,57 @@ h1 {
 }
 
 .cell {
-  display: grid;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 20%;
-  border: 2px solid var(--color-gray-700);
-  border-radius: var(--radius);
-  font-size: 2rem;
-  place-content: center;
+  border: 2px solid var(--color-cell-border);
+  color: var(--color-cell);
+  font-size: 1.5rem;
   aspect-ratio: 1 / 1;
 }
 
-/*
-  Round the corners for the 4 cells at the very corners of
-  the game board
-*/
+@media (min-width: 60rem) {
+  .cell {
+    font-size: 2rem;
+  }
+}
+
 .guess:first-of-type .cell:first-of-type {
-  --radius: 4px 0 0 0;
+  border-radius: var(--radius) 0 0 0;
 }
 
 .guess:first-of-type .cell:last-of-type {
-  --radius: 0 4px 0 0;
+  border-radius: 0 var(--radius) 0 0;
 }
 
 .guess:last-of-type .cell:last-of-type {
-  --radius: 0 0 4px 0;
+  border-radius: 0 0 var(--radius) 0;
 }
 
 .guess:last-of-type .cell:first-of-type {
-  --radius: 0 0 0 4px;
+  border-radius: 0 0 0 var(--radius);
 }
 
-.cell.correct {
+.correct {
   border-color: var(--color-success);
   background: var(--color-success);
-  color: white;
 }
 
-.cell.incorrect {
-  border-color: var(--color-gray-300);
-  background: var(--color-gray-300);
-  color: white;
+.incorrect {
+  border-color: var(--color-incorrect);
+  background: var(--color-incorrect);
 }
 
-.cell.misplaced {
+.misplaced {
   border-color: var(--color-warning);
   background: var(--color-warning);
-  color: white;
 }
 
 .guess-input-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  height: 6.75rem;
+  gap: .5rem;
 }
 
 .guess-input-wrapper label {
@@ -158,78 +142,37 @@ h1 {
 .guess-input-wrapper input {
   display: block;
   width: 100%;
-  padding: 8px 16px;
-  border: 2px solid var(--color-gray-300);
-  border-radius: 4px;
-  outline-offset: 4px;
+  padding: .5rem 1.5rem;
+  border: 2px solid var(--color-input-border);
+  border-radius: .25rem;
+  outline-offset: .25rem;
+  background-color: var(--color-input-bg);
   font-size: 2rem;
 }
 
 .banner {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  padding: 32px;
-  animation: slideUp 750ms cubic-bezier(0, .72, .24, 1.02);
-  border-radius: 4px 4px 0 0;
+  padding: 2rem;
+  animation: slide-up 750ms cubic-bezier(0, .72, .24, 1.02);
+  border-radius: .25rem;
+  color: var(--color-banner);
   text-align: center;
   will-change: transform;
 }
 
-.happy.banner {
+.happy {
   background: var(--color-success);
-  color: white;
+  color: var(--color-banner);
 }
 
-.sad.banner {
+.sad {
   background: var(--color-error);
-  color: white;
+  color: var(--color-banner);
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  border: 0;
-}
-
-/*
-  Modal styles
-
-  HACK: I'm doing this in a quick and dirty way.
-  Later in the course, we'll see my preferred way of building
-  modals in React.
-*/
-[data-reach-dialog-content] {
-  position: relative;
-  padding: 24px 32px;
-  border-radius: 8px;
-}
-
-.modal-close-btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 16px;
-  cursor: pointer;
-}
-
-.modal-title {
-  margin-bottom: .5em;
-}
-
-/*
-  Keyframe animations
-*/
-@keyframes slideUp {
+@keyframes slide-up {
   from {
     transform: translateY(100%);
   }
