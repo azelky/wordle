@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-export default function GameInput() {
-  const [guess, setGuess] = useState('');
+function GameInput({ handleGuessSubmit }) {
+  const [guessTry, setGuessTry] = useState('');
 
   function submitForm(event) {
     event.preventDefault();
-    console.log('%c guess = ', 'background-color: #607AFF; color: #FFF', guess);
-    setGuess('');
+    handleGuessSubmit(guessTry);
+    setGuessTry('');
   }
 
   return (
@@ -18,14 +18,16 @@ export default function GameInput() {
         required
         id="guess-input"
         type="text"
-        value={guess}
+        value={guessTry}
         maxLength={5}
         minLength={5}
         // we have to add a pattern as some browsers do not take minLength into account
         pattern="[a-zA-Z]{5}" // equivalent to acceptable characters are letters ([a-zA-Z]) + there should be exactly 5 of them
         title="Enter a 5 letter word"
-        onChange={(event) => setGuess(event.target.value.toUpperCase())}
+        onChange={(event) => setGuessTry(event.target.value.toUpperCase())}
       />
     </form>
   );
 }
+
+export default GameInput;
