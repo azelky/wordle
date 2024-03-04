@@ -13,15 +13,6 @@ function WonBanner({ attempts }) {
         .
       </p>
     </Banner>
-
-    //   {gameStatus === GAME_STATUS.lost && (
-    //     <div className="sad banner">
-    //       <p>
-    //         Sorry, the correct answer is <strong>{answer}</strong>.
-    //       </p>
-    //     </div>
-    //   )}
-    // </>
   );
 }
 
